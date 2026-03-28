@@ -39,7 +39,7 @@ impl SubscriberRepository {
             .remove(url);
         if !result.is_none() {
             return Some(result.unwrap().1);
-        }
+        } 
         return None;
     }
 }
