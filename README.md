@@ -91,3 +91,15 @@ This is the place for you to write reflections:
 3. Menurut saya, Postman sangat membantu kita dalam melakukan pengujian dan validasi berbagai endpoint yang ada. Hal ini untuk memastikan endpoint kita bekerja sesuai dengan fungsinya. Sebenarnya tanpa Postman, kita juga bisa melakukan pengujian manual terhadap endpoint kita tetapi dengan bantuan Postman maka pengujian kita akan lebih cepat. Kita dapat memeriksa dan melihat langsung status pengembaliannya seperti apakah berhasil atau tidak. Salah satu fitur di Postman yang menurut saya menarik dan dapat membantu dalam group project adalah Collections dimana saya bisa mengelompokkan semua endpoint aplikasi dan dapat membagikan ke teman sekelompok juga.
 
 #### Reflection Publisher-3
+1. Dalam tutorial ini, sistem ini menggunakan variasi Push Model karena dalam NotificationService, khususnya method notify, kita bisa lihat bahwa Publisher secara aktif mengirimkan (push) data melalui Notification payload ke setiap subscriber melalui method update. Jadi, Subscriber tidak perlu meminta data ke Publisher karena mereka secara otomatis menerima notifikasi yang berisi detail produk baru.
+
+2. Jika kita menerapkan variasi Pull Model dalam kasus ini, maka ada beberapa keuntungan dan kerugian dibandingkan Push Model. Berikut penjelasan detailnya : 
+- Keuntungan : Dengan konsep Pull Model, maka kontrol sepenuhnya ada di Subsciber. Mereka bisa memilih untuk mengambil data atau tidak saat itu. Selain itu, mereka juga dapat hanya mengambil data yang dibutuhkan saja. Oleh karena itu, pendekatan ini memberikan fleksibilitas tinggi dari sisi Subscribernya. 
+- Kekurangan : Karena dalam konsep Pull Model, terdapat dua kali komunikasi yaitu Publisher kasih tahu ada update dan Subscriber meminta data, maka traffic akan lebih padat. Jika jumlah subscribernya sangat banyak, maka akan sangat membebani server. Selain itu, Subscriber juga harus tahu endpoint untuk mengambil datanya sehingga kompleksitas dalam sisi Subscriber lebih meningkat. Hal ini juga menimbulkan coupling antar sistem.
+
+3. Jika kita tidak menggunakan multi threading dalam proses notifikasi, maka ada beberapa dampak yang cukup penting karena sistem memproses notifikasi secara satu per satu (sekuensial). Beberapa dampaknya : 
+- Butuh waktu lama: Tanpa adanya multi threading, program akan menunggu satu tugas selesai baru lanjut ke subscriber berikutnya. Proses sekuensial ini akan memakan waktu lama jika jumlah subscriber banyak.
+- User Experience buruk : Setiap user/subscriber harus menunggu lama sampai semua proses notifikasi selesai. Hal ini membuat pengalaman user yang buruk.
+- Risiko kegagalan : Jika salah satu proses gagal, maka dapat menghambat pengiriman notifikasi ke subscriber lain yang ada di urutan berikutnya.
+
+Dengan adanya multithread ini, memungkinkan program berjalan secara paralel sehingga tidak ada sekuensial di dalamnya.
